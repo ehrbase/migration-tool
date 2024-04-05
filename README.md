@@ -1,2 +1,2 @@
 # migration-tool
-Comming soon
+Coming soon
