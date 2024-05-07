@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    import:
+      url: jdbc:postgresql://localhost:5432/ehrbase
+      username: ehrbase
+      password: ehrbase
+    export:
+      enable: true
+      url: jdbc:postgresql://localhost:5432/ehrbase
+      username: ehrbase
+      password: ehrbase
+
+
+export:
+  batch-size: 100
+  folder: ./migration
+  postprocessors:
+    validation:
+      enable: true
+import:
+  # the regular db user, needed for the db migration
+  ehrbase-db-user: ehrbase_restricted
+  folder: ./migration
+mode: NONE
+
+logging:
+  level:
+    org.jooq.impl: ERROR

@@ -1,0 +1,38 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.ehrbase.migration</groupId>
+    <artifactId>migration-bom</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
+    <relativePath>bom/pom.xml</relativePath>
+  </parent>
+
+  <groupId>org.ehrbase.migration</groupId>
+  <artifactId>migration-tool</artifactId>
+  <version>1.1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>EHRbase Migration Tool</name>
+
+  <modules>
+    <module>bom</module>
+    <module>service</module>
+    <module>application</module>
+  </modules>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <configuration>
+          <java>
+            <licenseHeader>
+              <file>./spotless-lic-header</file>
+            </licenseHeader>
+          </java>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
