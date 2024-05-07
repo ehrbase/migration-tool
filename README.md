@@ -25,6 +25,7 @@ The properties must be adjusted according to the set-up:
 ### Spring boot
 ```
 mvn package
+
 java -jar application/target/migration-tool.jar \
 -Dmode=DB2DB \
 -Dspring.datasource.import.url=jdbc:postgresql://localhost:5432/ehrbase_import \
@@ -38,7 +39,9 @@ java -jar application/target/migration-tool.jar \
 
 ### Docker
 ```
-docker run ehrbase/migration-tool:1.1.0 \
+mvn verify
+
+docker run ehrbase/migration-tool:1.1.0-SNAPSHOT \
 -e mode=DB2DB \
 -e spring.datasource.import.url=jdbc:postgresql://localhost:5432/ehrbase_import \
 -e spring.datasource.import.username=ehrbase \

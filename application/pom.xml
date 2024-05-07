@@ -113,6 +113,13 @@
               <goal>repackage</goal>
             </goals>
           </execution>
+          <execution>
+            <id>docker</id>
+            <goals>
+              <goal>build-image-no-fork</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
         </executions>
         <configuration>
           <mainClass>org.ehrbase.migration.application.MigrationTool</mainClass>
