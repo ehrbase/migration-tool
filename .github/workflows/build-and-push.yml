@@ -61,13 +61,14 @@ jobs:
       - name: install migration tool main
         run: mvn install -Dmaven.test.skip=true
 
+      
+      # - name: Build with Maven
+      #  run: mvn clean verify spring-boot:build-image
 
-      - name: Build with Maven
-        run: mvn clean verify spring-boot:build-image
-
-      - name: Build and push
-        if: ${{ github.ref == 'ref/head/develop' }} || ${{ github.ref == 'ref/head/master' }} || ${{ github.ref == 'ref/head/main' }}
-        run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)       
-          docker push ehrbase/migration-tool:${VERSION}
+      
+      # - name: Build and push
+      #   if: ${{ github.ref == 'ref/head/develop' }} || ${{ github.ref == 'ref/head/master' }} || ${{ github.ref == 'ref/head/main' }}
+      #   run: |
+      #     VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)       
+      #     docker push ehrbase/migration-tool:${VERSION}
   
