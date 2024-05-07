@@ -3,11 +3,11 @@ name: Build and push
 on:
   push:
     branches:
-      - master
+      - main
       - develop
   pull_request:
     branches:
-      - master
+      - main
       - develop
 
 jobs:
@@ -25,8 +25,6 @@ jobs:
           fetch-depth: 0
           repository: ehrbase/migration-tool
           ref: develop
-          # This will be used by git in all further steps
-          # We need a PERSONAL ACCESS TOKEN so pushes trigger other github actions
           token: ${{ secrets.GITHUB_TOKEN  }}
 
       - name: Setup Java
@@ -56,19 +54,19 @@ jobs:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
           cache: 'maven'
+
       - name: Spotless
         run: mvn spotless:check
-      - name: install migration tool main
+
+      - name: Install migration tool main
         run: mvn install -Dmaven.test.skip=true
 
-      
-      # - name: Build with Maven
-      #  run: mvn clean verify spring-boot:build-image
+      - name: Build with Maven
+        run: mvn clean verify spring-boot:build-image
 
-      
-      # - name: Build and push
-      #   if: ${{ github.ref == 'ref/head/develop' }} || ${{ github.ref == 'ref/head/master' }} || ${{ github.ref == 'ref/head/main' }}
-      #   run: |
-      #     VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)       
-      #     docker push ehrbase/migration-tool:${VERSION}
+      - name: Build and push
+        if: ${{ github.ref == 'ref/head/develop' }} || ${{ github.ref == 'ref/head/main' }}
+        run: |
+           VERSION=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)       
+           docker push ehrbase/migration-tool:${VERSION}
   
