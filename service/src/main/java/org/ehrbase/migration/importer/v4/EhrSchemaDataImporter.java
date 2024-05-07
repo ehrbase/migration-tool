@@ -36,9 +36,11 @@ public class EhrSchemaDataImporter {
     public EhrSchemaDataImporter(DSLContext dslContext) {
         this.dslContext = dslContext;
     }
-
     protected void write(EhrSchemaData ehrSchemaData) {
 
+        if (dslContext.fetchCount(USERS) > 0) {
+            throw new IllegalStateException("The import database already contains users. Has the import been run twice?");
+        }
         ImportService.executeBulkInsert(
                 dslContext, ehrSchemaData.getUsers().stream().map(this::toUserRecord), USERS);
 

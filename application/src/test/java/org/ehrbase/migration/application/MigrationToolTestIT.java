@@ -152,7 +152,6 @@ class MigrationToolTestIT {
 
     @Test
     void test() throws IOException {
-        // TODO proper system id, separate test aspects
 
         String committer1Subject = "efb90305-f546-40aa-9c78-ba199a089cf6";
         DefaultRestClient restClient1 = setupRestClientWithInternalTemplateProvider(ehrbaseOld, committer1Subject);
