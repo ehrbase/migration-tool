@@ -65,7 +65,7 @@ jobs:
         run: mvn clean verify spring-boot:build-image
 
       - name: Build and push
-        if: ${{ github.ref == 'ref/head/develop' }} || ${{ github.ref == 'ref/head/main' }}
+        if: ${{ github.ref == 'ref/head/main' }}
         run: |
            VERSION=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)       
            docker push ehrbase/migration-tool:${VERSION}
