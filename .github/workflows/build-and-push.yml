@@ -46,6 +46,7 @@ jobs:
       - name: Build and push
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)       
+          VERSION=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout) 
+          echo ${VERSION}
           docker push ehrbase/migration-tool:${VERSION}
   
