@@ -18,24 +18,6 @@ jobs:
         java: [ '21' ]
 
     steps:
-      # Install the migration tool in the local repo
-      - name: Checkout Migration Tool
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          repository: ehrbase/migration-tool
-          ref: develop
-          token: ${{ secrets.GITHUB_TOKEN  }}
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: ${{ matrix.java }}
-          cache: 'maven'
-
-      - name: Install Migration Tool
-        run: mvn install
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,15 +40,12 @@ jobs:
       - name: Spotless
         run: mvn spotless:check
 
-      - name: Install migration tool main
-        run: mvn install -Dmaven.test.skip=true
-
       - name: Build with Maven
-        run: mvn clean verify
+        run: mvn clean verify spring-boot:build-image
 
       - name: Build and push
-        if: ${{ github.ref == 'ref/head/main' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-           VERSION=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)       
-           docker push ehrbase/migration-tool:${VERSION}
+          VERSION=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)       
+          docker push ehrbase/migration-tool:${VERSION}
   
