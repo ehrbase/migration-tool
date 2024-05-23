@@ -1,5 +1,5 @@
 name: Enhancement Request
-description: Enhancement request for a new / extended functionality of EHRbase
+description: Enhancement request for a new / extended functionality of the migration tool
 labels: ["enhancement"]
 body:
   - type: textarea

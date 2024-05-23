@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a bug encountered when working with EHRbase
+description: Report a bug encountered when working with the migration tool
 labels: ["bug"]
 body:
   - type: checkboxes
