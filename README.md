@@ -41,7 +41,7 @@ java -jar application/target/migration-tool.jar \
 ```
 mvn verify
 
-docker run ehrbase/migration-tool:1.1.0-SNAPSHOT \
+docker run ehrbase/migration-tool:1.1.0 \
 -e mode=DB2DB \
 -e spring.datasource.import.url=jdbc:postgresql://localhost:5432/ehrbase_import \
 -e spring.datasource.import.username=ehrbase \

@@ -16,7 +16,7 @@
   <name>EHRbase Migration Tool Application</name>
 
   <properties>
-    <image.name>dockerhub.io/ehrbase/migration-tool</image.name>
+    <image.name>ehrbase/migration-tool</image.name>
     <image.tag>${project.version}</image.tag>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
