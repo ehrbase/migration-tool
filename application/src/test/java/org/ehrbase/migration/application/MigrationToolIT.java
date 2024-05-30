@@ -83,8 +83,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @Testcontainers
-@ContextConfiguration(initializers = MigrationToolTestIT.Initializer.class)
-class MigrationToolTestIT {
+@ContextConfiguration(initializers = MigrationToolIT.Initializer.class)
+class MigrationToolIT {
 
     protected static GenericContainer postgresOld;
 
@@ -244,7 +244,7 @@ class MigrationToolTestIT {
     }
 
     @NotNull
-    private MigrationToolTestIT.EhrExampleData createExampleEhr(
+    private MigrationToolIT.EhrExampleData createExampleEhr(
             String exampleCompositionName,
             DefaultRestClient restClient1,
             String committer1Subject,
@@ -356,7 +356,7 @@ class MigrationToolTestIT {
                 .extracting(
                         r -> r.getVersionId().getVersionTreeId().getValue(),
                         r -> r.getAudits().getFirst().getChangeType().getValue(),
-                        MigrationToolTestIT::getAuditCommitterUuid,
+                        MigrationToolIT::getAuditCommitterUuid,
                         r -> ((PartyIdentified) r.getAudits().getFirst().getCommitter()).getName())
                 .containsExactly(expectedAudits);
     }
