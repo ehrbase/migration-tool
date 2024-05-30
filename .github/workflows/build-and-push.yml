@@ -35,7 +35,7 @@ jobs:
           cache: 'maven'
 
       - name: Build
-        run: mvn clean verify spring-boot:build-image
+        run: mvn --batch-mode --update-snapshots clean verify spring-boot:build-image
 
       - name: Spotless
         run: mvn spotless:check
