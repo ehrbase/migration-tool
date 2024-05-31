@@ -87,6 +87,7 @@
         <version>2.11.5</version>
       </dependency>
 
+      <!-- Test -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-test</artifactId>

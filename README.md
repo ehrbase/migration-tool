@@ -19,7 +19,9 @@ The target database needs to be prepared according to the instructions in the [E
 
 ## Performing the migration
 
-The migration can be run directly from the source code, or the provided docker image.
+The migration can be run directly from the source code, or the provided docker image. As a naming convention an `export`
+datasource represents an EHRbase 0.x.x database where an `import` datasource represents an EHRbase 2 database.
+
 The properties must be adjusted according to the set-up:
 
 ### Spring boot
@@ -28,10 +30,10 @@ mvn package
 
 java -jar application/target/migration-tool.jar \
 -Dmode=DB2DB \
--Dspring.datasource.import.url=jdbc:postgresql://localhost:5432/ehrbase_import \
+-Dspring.datasource.import.url=jdbc:postgresql://localhost:5432/ehrbase_new \
 -Dspring.datasource.import.username=ehrbase \
 -Dspring.datasource.import.password=ehrbase \
--Dspring.datasource.export.url=jdbc:postgresql://localhost:5432/ehrbase_export \
+-Dspring.datasource.export.url=jdbc:postgresql://localhost:5432/ehrbase_old \
 -Dspring.datasource.export.username=ehrbase \
 -Dspring.datasource.export.password=ehrbase \
 -Dimport.ehrbase-db-user=ehrbase_restricted
@@ -43,10 +45,10 @@ mvn verify
 
 docker run ehrbase/migration-tool:1.1.0 \
 -e mode=DB2DB \
--e spring.datasource.import.url=jdbc:postgresql://localhost:5432/ehrbase_import \
+-e spring.datasource.import.url=jdbc:postgresql://localhost:5432/ehrbase_new \
 -e spring.datasource.import.username=ehrbase \
 -e spring.datasource.import.password=ehrbase \
--e spring.datasource.export.url=jdbc:postgresql://localhost:5432/ehrbase_export \
+-e spring.datasource.export.url=jdbc:postgresql://localhost:5432/ehrbase_old \
 -e spring.datasource.export.username=ehrbase \
 -e spring.datasource.export.password=ehrbase \
 -e import.ehrbase-db-user=ehrbase_restricted

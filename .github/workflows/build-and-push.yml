@@ -13,10 +13,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        java: [ '21' ]
-
     steps:
 
       - name: Checkout
@@ -24,29 +20,28 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Login to GitLab
+      - name: Docker - Login
         uses: docker/login-action@v3
+        if: ${{ github.actor != 'dependabot[bot]' }}
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Setup Java
+      - name: Setup - Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: ${{ matrix.java }}
+          java-version: '21'
           cache: 'maven'
+
+      - name: Build
+        run: mvn --batch-mode --update-snapshots clean verify spring-boot:build-image
 
       - name: Spotless
         run: mvn spotless:check
 
-      - name: Build with Maven
-        run: mvn clean verify spring-boot:build-image
-
-      - name: Build and push
+      - name: Docker - Push
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           VERSION=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout) 
-          echo ${VERSION}
           docker push ehrbase/migration-tool:${VERSION}
-  
