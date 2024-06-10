@@ -78,7 +78,7 @@ jobs:
 
       - name: Merge into Main
         run: |
-          git checkout master
+          git checkout main
           git pull
           git merge --no-ff release/v${VERSION}
           git tag  -a  -m "v${VERSION}" "v${VERSION}"
@@ -86,7 +86,7 @@ jobs:
 
       - name: Create Release
         run: |
-          gh release create "v${VERSION}" -t "v${VERSION}"  -F CHANGELOG.md -R ${{ github.repository  }} --target master
+          gh release create "v${VERSION}" -t "v${VERSION}"  -F CHANGELOG.md -R ${{ github.repository  }} --target main
         env:
           GITHUB_TOKEN: ${{ secrets.BOT_ACCESS_TOKEN }}
 
