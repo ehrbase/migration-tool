@@ -19,8 +19,6 @@ package org.ehrbase.migration.importer.v4;
 
 import java.util.Map;
 import java.util.Optional;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.sql.DataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.flywaydb.core.Flyway;
@@ -30,6 +28,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -61,8 +61,8 @@ public class FlywayService {
     }
 
     public void migrateSchema(
-            @Nonnull String schema,
-            @Nonnull String location,
+            @NonNull String schema,
+            @NonNull String location,
             @Nullable String baseline,
             @Nullable String schemaPlaceholder) {
         FluentConfiguration config =

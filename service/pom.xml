@@ -11,12 +11,16 @@
 
   <groupId>org.ehrbase.migration</groupId>
   <artifactId>migration-service</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <packaging>jar</packaging>
   <name>EHRbase Migration Tool Service</name>
 
   <properties>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
     <java.version>21</java.version>
+
+    <skipTests>false</skipTests>
   </properties>
 
   <dependencyManagement>
@@ -32,6 +36,8 @@
   </dependencyManagement>
 
   <dependencies>
+
+    <!-- Compile -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
@@ -87,6 +93,7 @@
       <artifactId>zip4j</artifactId>
     </dependency>
 
+    <!-- Test -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -123,6 +130,28 @@
           </java>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>repackage</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>docker</id>
+            <goals>
+              <goal>build-image-no-fork</goal>
+            </goals>
+            <phase>verify</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
@@ -163,12 +192,21 @@
             <goals>
               <goal>test</goal>
             </goals>
+            <configuration>
+              <skipTests>${skipTests}</skipTests>
+              <includes>
+                <include>**/*Test.java</include>
+              </includes>
+            </configuration>
           </execution>
         </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <skipITs>${skipTests}</skipITs>
+        </configuration>
         <executions>
           <execution>
             <id>integration-test</id>
@@ -187,27 +225,7 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>docker</id>
-            <goals>
-              <goal>build-image-no-fork</goal>
-            </goals>
-            <phase>verify</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
+
     </plugins>
   </build>
 

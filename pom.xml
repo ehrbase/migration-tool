@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.ehrbase.migration</groupId>
     <artifactId>migration-bom</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <relativePath>bom/pom.xml</relativePath>
   </parent>
 
   <artifactId>migration-tool</artifactId>
-  <version>1.1.0</version>
+  <version>1.2.0</version>
   <packaging>pom</packaging>
   <name>EHRbase Migration Tool</name>
 
@@ -19,6 +19,7 @@
     <module>service</module>
     <module>application</module>
   </modules>
+
   <build>
     <plugins>
       <plugin>
@@ -30,27 +31,6 @@
               <file>./spotless-lic-header</file>
             </licenseHeader>
           </java>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>docker</id>
-            <goals>
-              <goal>build-image-no-fork</goal>
-            </goals>
-            <phase>verify</phase>
-          </execution>
-        </executions>
-        <configuration>
-          <skip>true</skip>
         </configuration>
       </plugin>
     </plugins>
