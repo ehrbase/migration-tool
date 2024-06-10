@@ -13,3 +13,5 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [1.1.0]
 
 Initial publicly available version.
+
+[unreleased]: https://github.com/ehrbase/migration-tool/compare/v1.1.0...HEAD
