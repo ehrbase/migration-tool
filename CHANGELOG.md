@@ -8,6 +8,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 ### Added
 ### Fixed
+- Fix class not found for nullable annotation in archie [[#15](https://github.com/ehrbase/migration-tool/pull/15)]
 
 ## [1.2.0]
 ### Fixed
