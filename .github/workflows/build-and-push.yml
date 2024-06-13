@@ -47,6 +47,7 @@ jobs:
       - name: Docker - Push Next
         if: ${{ github.ref == 'refs/heads/develop' }}
         run: |
+          docker tag ehrbase/migration-tool:${VERSION} ehrbase/migration-tool:next
           docker push ehrbase/migration-tool:next
 
       - name: Docker - Push Release
