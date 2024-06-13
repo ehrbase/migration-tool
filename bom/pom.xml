@@ -79,7 +79,7 @@
       <dependency>
         <groupId>com.nedap.healthcare.archie</groupId>
         <artifactId>openehr-rm</artifactId>
-        <version>3.3.0</version>
+        <version>3.10.0</version>
       </dependency>
       <dependency>
         <groupId>net.lingala.zip4j</groupId>
