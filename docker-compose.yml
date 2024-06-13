@@ -1,0 +1,88 @@
+version: "3"
+
+services:
+
+  migration-tool:
+    image: 'ehrbase/migration-tool:1.2.0-SNAPSHOT'
+    environment:
+      mode: DB2DB
+      spring.datasource.export.url: jdbc:postgresql://postgres-export:5432/ehrbase
+      spring.datasource.export.username: ehrbase
+      spring.datasource.export.password: ehrbase
+      spring.datasource.import.url: jdbc:postgresql://postgres-import:5432/ehrbase
+      spring.datasource.import.username: ehrbase
+      spring.datasource.import.password: ehrbase
+      import.ehrbase-db-user: ehrbase_restricted
+    links:
+      - ehrbase-export
+      - postgres-export
+      - postgres-import
+    depends_on:
+      ehrbase-export:
+        condition: service_healthy
+      postgres-export:
+        condition: service_healthy
+      postgres-import:
+        condition: service_healthy
+    networks:
+      - ehrbase-net
+
+  ehrbase-export:
+    image: ehrbase/ehrbase:0.32.0
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-export:5432/ehrbase
+      DB_USER_ADMIN: ehrbase
+      DB_PASS_ADMIN: ehrbase
+      DB_USER: ehrbase_restricted
+      DB_PASS: ehrbase_restricted
+      MANAGEMENT_ENDPOINT_HEALTH_ENABLED: true # needed for docker healthcheck
+      MANAGEMENT_HEALTH_REDIS_ENABLED: false   # exclude redis from healthcheck
+    healthcheck:
+      test: [ "CMD-SHELL", "curl --fail --silent http://localhost:8080/ehrbase/management/health | grep UP || exit 1" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    links:
+      - postgres-export
+    depends_on:
+      postgres-export:
+        condition: service_healthy
+    networks:
+      - ehrbase-net
+
+  postgres-export:
+    image: ehrbase/ehrbase-postgres:13.4.v2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      EHRBASE_USER_ADMIN: ehrbase
+      EHRBASE_PASSWORD_ADMIN: ehrbase
+      EHRBASE_USER: ehrbase_restricted
+      EHRBASE_PASSWORD: ehrbase_restricted
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    networks:
+      - ehrbase-net
+
+  postgres-import:
+    image: ehrbase/ehrbase-v2-postgres:16.2
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      EHRBASE_USER_ADMIN: ehrbase
+      EHRBASE_PASSWORD_ADMIN: ehrbase
+      EHRBASE_USER: ehrbase_restricted
+      EHRBASE_PASSWORD: ehrbase_restricted
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    networks:
+      - ehrbase-net
+
+networks:
+  ehrbase-net: { }
