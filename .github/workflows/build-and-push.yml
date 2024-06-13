@@ -41,8 +41,21 @@ jobs:
       - name: Spotless
         run: mvn spotless:check
 
-      - name: Docker - Push
+      - name: Read Version
+        run: echo "VERSION=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout)" >> $GITHUB_ENV
+
+      - name: Docker - Push Next
+        if: ${{ github.ref == 'refs/heads/develop' }}
+        run: |
+          docker push ehrbase/migration-tool:next
+
+      - name: Docker - Push Release
         if: ${{ github.ref == 'refs/heads/main' }}
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression="project.version" -q -DforceStdout) 
           docker push ehrbase/migration-tool:${VERSION}
+
+      - name: Docker - Push Latest
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: |
+          docker tag ehrbase/migration-tool:${VERSION} ehrbase/migration-tool:latest
+          docker push ehrbase/migration-tool:latest
