@@ -59,6 +59,17 @@
     <dependency>
       <groupId>org.wiremock</groupId>
       <artifactId>wiremock</artifactId>
+      <exclusions>
+        <!--
+          Messes up with guava from archie. Wiremock uses an older version that is missing findbugs,
+          when maven decides to use this version for packaging, it will lead to runtime failure
+          because some Nullable annotation can not be found in the classpath.
+        -->
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.mock-server</groupId>
