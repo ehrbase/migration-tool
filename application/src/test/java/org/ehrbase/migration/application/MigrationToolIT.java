@@ -101,6 +101,7 @@ class MigrationToolIT {
         @Override
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
             var values = TestPropertyValues.of(
+                    "spring.datasource.export.enable=true",
                     "spring.datasource.export.url=jdbc:postgresql://%s:%d/ehrbase"
                             .formatted(
                                     postgresOld.getHost(), postgresOld.getMappedPort(EHRbasePostgresOldContainer.PORT)),

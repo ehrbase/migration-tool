@@ -154,6 +154,7 @@
           <mainClass>org.ehrbase.migration.application.MigrationTool</mainClass>
           <image>
             <name>${image.name}:${image.tag}</name>
+            <builder>paketobuildpacks/builder-noble-java-tiny:0.0.69</builder>
             <env>
               <BP_DEBUG_ENABLED>true</BP_DEBUG_ENABLED>
             </env>
