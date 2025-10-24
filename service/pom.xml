@@ -149,6 +149,9 @@
         </executions>
         <configuration>
           <skip>true</skip>
+          <image>
+            <builder>paketobuildpacks/builder-noble-java-tiny:0.0.69</builder>
+          </image>
         </configuration>
       </plugin>
 

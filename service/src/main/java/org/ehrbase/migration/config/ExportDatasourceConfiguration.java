@@ -40,7 +40,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConditionalOnProperty("spring.datasource.export.enable")
+@ConditionalOnProperty(name = "spring.datasource.export.enable", havingValue = "true")
 public class ExportDatasourceConfiguration {
 
     @Bean

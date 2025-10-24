@@ -21,15 +21,15 @@ import org.ehrbase.migration.config.ExportDatasourceConfiguration;
 import org.ehrbase.migration.exporter.v0.ExportServiceV0Imp;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@ConditionalOnProperty(name = "spring.datasource.export.enable", havingValue = "true")
 public class ExportServiceConfiguration {
 
     @Bean
-    @ConditionalOnBean(name = "exportDslContext")
     ExportService exportService(
             @Qualifier("exportDslContext") DSLContext context,
             ExportDatasourceConfiguration.TenantHandlingExportConnectionProvider connectionProvider) {
